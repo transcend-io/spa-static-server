@@ -19,7 +19,7 @@
     "####### Linting #######": "",
     "lint": "BUILD_ENV=development NODE_ENV=development eslint .",
     "####### Server #######": "",
-    "start": "node server --color=always",
+    "start": "node server --color always",
     "####### Example #######": "",
     "example:build": "docker-compose -p spa-static-example -f example.yml build",
     "example:down": "docker-compose -p spa-static-example -f example.yml down",
