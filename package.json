@@ -1,0 +1,26 @@
+{
+  "name": "spa-static-server",
+  "version": "1.0.0",
+  "description": "A docker image that will run a static build of a SPA, redirecting 404 to index.html",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/transcend-io/spa-static-server"
+  },
+  "bugs": {
+    "url": "https://github.com/transcend-io/spa-static-server/issues"
+  },
+  "main": ".",
+  "engines": {},
+  "author": "Transcend Inc.",
+  "scripts": {
+    "####### Build #######": "",
+    "build": "docker build -f \"./Dockerfile\" .",
+    "####### Linting #######": "",
+    "lint": "BUILD_ENV=development NODE_ENV=development eslint ."
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^5.12.1"
+  }
+}
