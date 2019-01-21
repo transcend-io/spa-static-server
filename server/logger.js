@@ -2,11 +2,8 @@
 
 // external modules
 const chalk = require('chalk');
-const ip = require('ip');
 
-// local
-const { NODE_ENV } = require('./envs');
-
+// Divider
 const divider = chalk.gray('\n-----------------------------------');
 
 /**
@@ -25,12 +22,14 @@ const logger = {
     console.log(`
 ${chalk.bold('Access URLs:')}${divider}
 Localhost: ${chalk.magenta(`${host}:${port}`)}
-NODE_ENV: ${NODE_ENV}
-      LAN: ${chalk.magenta(`https://${ip.address()}:${port}`)
-+ (tunnelStarted ? `\n    Proxy: ${chalk.magenta(tunnelStarted)}` : '')}${divider}
+NODE_ENV: ${process.env.NODE_ENV}
 ${chalk.blue(`Press ${chalk.italic('CTRL-C')} to stop`)}
     `);
   },
+
+  // Log the configuration
+  config: (vars) => Object.entries(vars)
+    .forEach(([key, val]) => console.log(`  ${key}: ${val}`)),
 
   // Called whenever there's an error on the server we want to print
   error: (err) => {

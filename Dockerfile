@@ -1,28 +1,37 @@
+# Docker image for the node app
+ARG NODE_IMAGE=10.15.0-alpine
+FROM node:$NODE_IMAGE
+
 # Args
-ARG baseUrl=https://yo.com:4021
-ARG record=false
-ARG projectId=TODO
+ARG SSL_CERT=/ssl/certificate.pem
+ARG SSL_KEY=/ssl/private.key
+ARG BACKEND_URL=https://yo.com:4012
+ARG BUILD_PATH=/build
+ARG FRONTEND_URL=https://yo.com:3012
 
-# Use the Cypress base image
-FROM cypress/browsers:chrome69
+# Set the envs
+ENV SSL_CERT ${SSL_CERT}
+ENV SSL_KEY ${SSL_KEY}
+ENV BACKEND_URL ${BACKEND_URL}
+ENV BUILD_PATH ${BUILD_PATH}
+ENV FRONTEND_URL ${FRONTEND_URL}
 
-ENV CI=true
-ENV CYPRESS_baseUrl=${baseUrl}
-ENV CYPRESS_projectId=${projectId}
+# Always production
+ARG NODE_ENV=production
 
 # Set working directory
+RUN mkdir /ssl
+RUN mkdir /build
 RUN mkdir /app
 WORKDIR /app
 
-# Copy over package.json and cypress.json
-COPY package.json /app/package.json
-COPY cypress.json /app/cypress.json
+# Copy package.json and install
+COPY package.json package-lock.json /app/
+# RUN npm ci TODO
+RUN npm i
 
-# Install Cypress and verify the installation
-RUN npm install cypress@3.1.3 \
- && ln -s $(pwd)/node_modules/.bin/cypress /usr/local/bin/cypress \
- && cypress verify \
- && cypress --version
+# Copy over the server code
+COPY server/ /app/server/
 
 # Test runner
-CMD ["cypress", "run", "--record", $record]
+CMD ["node", "server"]

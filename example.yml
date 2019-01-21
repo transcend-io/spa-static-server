@@ -1,0 +1,28 @@
+# https://docs.docker.com/compose/compose-file/compose-file-v2/
+
+version: '2.3'
+services:
+  frontend-app:
+    build:
+      # Start this container from an image built using the following directory
+      # and Dockerfile
+      context: ./
+      dockerfile: Dockerfile
+    # Environment variables
+    environment:
+      FRONTEND_URL: ${FRONTEND_URL:-https://yo.com:3012}
+      BACKEND_URL: ${BACKEND_URL:-https://app-cypress:4012}
+    networks:
+      - cypress_default
+    ports:
+      # Exposes 3012 from the container to the host on 3012
+      - "3012:3012"
+    volumes:
+      # Mount the build
+      - "/Users/michaelfarrell/transcend/gdpr-frontend/builds/cypress-local:/build"
+      # Mount the certs
+      - "/Users/michaelfarrell/transcend/gdpr-frontend/internals/ssl/certificate.pem:/ssl/certificate.pem"
+      - "/Users/michaelfarrell/transcend/gdpr-frontend/internals/ssl/private.key:/ssl/private.key"
+networks:
+  cypress_default:
+    external: true

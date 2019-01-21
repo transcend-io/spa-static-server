@@ -17,9 +17,20 @@
     "####### Build #######": "",
     "build": "docker build -f \"./Dockerfile\" .",
     "####### Linting #######": "",
-    "lint": "BUILD_ENV=development NODE_ENV=development eslint ."
+    "lint": "BUILD_ENV=development NODE_ENV=development eslint .",
+    "####### Server #######": "",
+    "start": "node server --color=always",
+    "####### Example #######": "",
+    "example:build": "docker-compose -p spa-static-example -f example.yml build",
+    "example:down": "docker-compose -p spa-static-example -f example.yml down",
+    "example:up": "docker-compose -p spa-static-example -f example.yml up"
   },
-  "dependencies": {},
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "compression": "^1.7.3",
+    "express": "^4.16.4",
+    "http-proxy-middleware": "^0.19.1"
+  },
   "devDependencies": {
     "eslint": "^5.12.1"
   }

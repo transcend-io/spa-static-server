@@ -14,3 +14,11 @@ A public docker image that is pre-built for running cypress tests. This reposito
     ```sh
     npm run build
     ```
+
+## Use
+
+An example of using this docker file can be found in `example.yml`.
+
+1. Modify the file to point to files on your local machine
+2. Run `npm run build` to build the image
+3. Docker compose the example `docker-compose -f example.yml up`

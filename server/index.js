@@ -7,29 +7,58 @@
  * @see module:server/envs
  */
 
+// Always run in production
+process.env.NODE_ENV = 'production';
+
 // external modules
 const express = require('express');
 const proxy = require('http-proxy-middleware');
-const { readFileSync } = require('fs');
+const { readFileSync, existsSync } = require('fs');
 const https = require('https');
-const { join, resolve } = require('path');
 
 // local
 const logger = require('./logger');
-const argv = require('./argv');
-const setup = require('./middlewares/frontendMiddleware');
+const setup = require('./addMiddlewares');
 
-// Settings
-const isDev = NODE_ENV !== 'production';
-const ngrok = (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel ? require('ngrok') : false; // eslint-disable-line
+// Environments
+const {
+  SSL_CERT,
+  SSL_KEY,
+  BACKEND_URL,
+  BUILD_PATH,
+  FRONTEND_URL,
+} = process.env;
+
+// Log the config
+const vars = {
+  SSL_CERT,
+  SSL_KEY,
+  BACKEND_URL,
+  BUILD_PATH,
+  FRONTEND_URL,
+};
+logger.config(vars);
+
+// Ensure provided
+const missingVars = Object.entries(vars)
+  .filter(([, val]) => !val)
+  .map(([name]) => name)
+if (missingVars.length > 0) {
+  throw new Error(`Missing environment variables: "${missingVars.join('", "')}"`)
+}
+
+// Ensure certs exist
+if (!existsSync(SSL_CERT)) throw new Error(`File does not exist: "${SSL_CERT}"`);
+if (!existsSync(SSL_KEY)) throw new Error(`File does not exist: "${SSL_KEY}"`);
+if (!existsSync(BUILD_PATH)) throw new Error(`Folder does not exist: "${BUILD_PATH}"`);
 
 // Create an express server
 const app = express();
 
 // SSL options
 const options = {
-  cert: readFileSync(join(__dirname, '..', 'internals', 'ssl', 'certificate.pem')),
-  key: readFileSync(join(__dirname, '..', 'internals', 'ssl', 'private.key')),
+  cert: readFileSync(SSL_CERT),
+  key: readFileSync(SSL_KEY),
 };
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
@@ -40,17 +69,9 @@ app.use('/backend', proxy('/backend', {
   secure: false,
 }));
 
-// Direct to s3
-// app.use('/s3', require('react-dropzone-s3-uploader/s3router')({
-//   ACL: 'public-read', // this is the default - set to `public-read` to let anyone view uploads
-//   bucket: 'development-photo-upload', // required
-//   headers: { 'Access-Control-Allow-Origin': '*' }, // optional
-//   region: 'us-east-1', // optional
-// }));
-
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
-  outputPath: resolve(process.cwd(), 'builds', BUILD_ENV),
+  outputPath: BUILD_PATH,
   publicPath: '/',
 });
 
@@ -62,14 +83,5 @@ const prettyHost = splitFull.join(':');
 // Start the server
 https.createServer(options, app).listen(port, (err) => {
   if (err) return logger.error(err.message);
-
-  // Connect to ngrok in dev mode
-  if (ngrok) {
-    return ngrok.connect(port, (innerErr, url) => innerErr
-      ? logger.error(innerErr)
-      : logger.appStarted(port, prettyHost, url)
-    );
-  }
-
   return logger.appStarted(port, prettyHost);
 });
