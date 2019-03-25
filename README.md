@@ -1,8 +1,8 @@
 # spa-static-server
 
-A docker image that will run a static build of a SPA, redirecting 404 to index.html
+A Docker image that will run a static build of a single page application, redirecting 404 to index.html
 
-A public docker image that is pre-built for running cypress tests. This repository is auto-build by docker and the image can be downloaded from `transcendio/spa-static-server`.
+This repository is auto-built by Docker and the image can be downloaded from `transcendio/spa-static-server`.
 
 ## Setup
 
