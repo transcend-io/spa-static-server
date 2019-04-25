@@ -6,6 +6,8 @@ builds
 .expo/
 stats.json
 
+*.env.secret
+
 ### gitignore.io ###
 # Created by https://www.gitignore.io/api/vim,node,code,linux,macos,windows,sublimetext,intellij
 

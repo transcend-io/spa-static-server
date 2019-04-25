@@ -8,18 +8,20 @@ services:
       # and Dockerfile
       context: ./
       dockerfile: Dockerfile
+    # Pass in AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
+    env_file:
+      - aws.env.secret
     # Environment variables
     environment:
       FRONTEND_URL: ${FRONTEND_URL:-https://yo.com:3012}
       BACKEND_URL: ${BACKEND_URL:-https://app:4012}
+      S3_BUCKET: ${S3_BUCKET:-dev-privacy-page-transcend-io}
     ports:
       # Exposes 3012 from the container to the host on 3012
       - "3012:3012"
     volumes:
       # Mount the server for dev only (not needed)
       - "./server:/app/server"
-      # Mount the local build
-      - "./example-build:/build"
       # Mount the certs
       - "./ssl/certificate.pem:/ssl/certificate.pem"
       - "./ssl/private.key:/ssl/private.key"

@@ -20,18 +20,23 @@
     "lint": "BUILD_ENV=development NODE_ENV=development eslint .",
     "####### Server #######": "",
     "start": "node server --color always",
+    "####### Dependencies #######": "",
+    "check:deps:interactive": "npm-check -u",
     "####### Example #######": "",
     "example:build": "docker-compose -p spa-static-example -f example.yml build",
-    "example:down": "docker-compose -p spa-static-example -f example.yml down",
-    "example:up": "docker-compose -p spa-static-example -f example.yml up"
+    "example:up": "docker-compose -p spa-static-example -f example.yml up",
+    "example:remote:build": "docker-compose -p spa-static-example-remote -f example-remote.yml build",
+    "example:remote:down": "docker-compose -p spa-static-example-remote -f example-remote.yml down",
+    "example:remote:up": "docker-compose -p spa-static-example-remote -f example-remote.yml up"
   },
   "dependencies": {
     "chalk": "^2.4.2",
-    "compression": "^1.7.3",
+    "compression": "^1.7.4",
     "express": "^4.16.4",
     "http-proxy-middleware": "^0.19.1"
   },
   "devDependencies": {
-    "eslint": "^5.12.1"
+    "eslint": "^5.16.0",
+    "npm-check": "^5.9.0"
   }
 }

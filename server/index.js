@@ -15,6 +15,7 @@ const express = require('express');
 const proxy = require('http-proxy-middleware');
 const { readFileSync, existsSync } = require('fs');
 const https = require('https');
+const { execSync } = require('child_process');
 
 // local
 const logger = require('./logger');
@@ -22,12 +23,34 @@ const setup = require('./addMiddlewares');
 
 // Environments
 const {
-  SSL_CERT,
-  SSL_KEY,
+  // Create a proxy to the backend
   BACKEND_URL,
-  BUILD_PATH,
+  // Host the frontend here
   FRONTEND_URL,
+  // (optional) The location of the ssl certificate file (mount instead to /ssl/certificate.pem)
+  SSL_CERT,
+  // (optional) The location of the SSL_CERT file (mount instead to /ssl/private.key)
+  SSL_KEY,
+  // (optional) The location of the build (mount instead to /build)
+  BUILD_PATH,
+  // (optional) Provide the name of the s3 bucket to host from
+  S3_BUCKET,
+  AWS_ACCESS_KEY_ID,
+  AWS_SECRET_ACCESS_KEY,
 } = process.env;
+
+// Load in assets from s3
+if (S3_BUCKET) {
+  // Ensure access key and secret are set
+  if (!AWS_ACCESS_KEY_ID || !AWS_SECRET_ACCESS_KEY) {
+    throw new Error('AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY must be provided with S3_BUCKET')
+  }
+
+  logger.info(`Cloning in the contents form the s3 bucket: ${S3_BUCKET}"`)
+  const cmd = `AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} aws s3 cp s3://${S3_BUCKET}/ "${BUILD_PATH}" --recursive`;
+  execSync(cmd);
+}
+
 
 // Log the config
 const vars = {

@@ -10,6 +10,7 @@ const divider = chalk.gray('\n-----------------------------------');
  * Logger middleware, you can customize it to make messages more personal
  */
 const logger = {
+  info: (x) => console.log(chalk.magenta(x)),
   // Called when express.js app starts on given port w/o errors
   appStarted: (port, host, tunnelStarted) => {
     console.log(`Server started ! ${chalk.green('✓')}`);
