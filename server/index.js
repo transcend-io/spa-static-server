@@ -37,10 +37,18 @@ const {
   S3_BUCKET,
   AWS_ACCESS_KEY_ID,
   AWS_SECRET_ACCESS_KEY,
+  // Disable buckets by name, useful in dev.yml on backend
+  DISABLED_BUCKETS = '',
 } = process.env;
 
 // Load in assets from s3
 if (S3_BUCKET) {
+  // Potentially skip the bucket
+  const skipBuckets = DISABLED_BUCKETS.split(',').map((x) => x.trim());
+  if (skipBuckets.includes(S3_BUCKET)) {
+    process.exit(0);
+  }
+
   // Ensure access key and secret are set
   if (!AWS_ACCESS_KEY_ID || !AWS_SECRET_ACCESS_KEY) {
     throw new Error('AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY must be provided with S3_BUCKET')
