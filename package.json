@@ -1,6 +1,6 @@
 {
   "name": "@transcend-io/spa-static-server",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A docker image that will run a static build of a SPA, redirecting 404 to index.html",
   "license": "MIT",
   "repository": {
@@ -28,7 +28,8 @@
     "####### Linting #######": "",
     "lint": "eslint .",
     "####### Server #######": "",
-    "start": "BUILD_ENV_PATH=./examples/example.env node server --color always",
+    "start": "BUILD_ENV_PATH=./examples/example.env node server",
+    "start:cli": "BUILD_ENV_PATH=./examples/example.env node cli.js",
     "####### Dependencies #######": "",
     "check:deps:interactive": "npm-check -u",
     "####### Example #######": "",
