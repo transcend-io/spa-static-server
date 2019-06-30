@@ -1,2 +1,2 @@
-#!/usr/bin/env node --color always
+#!/usr/bin/env node
 require('./server');
