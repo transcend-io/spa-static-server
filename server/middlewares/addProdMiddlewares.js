@@ -1,3 +1,4 @@
+// external modules
 const path = require('path');
 const express = require('express');
 const compression = require('compression');
@@ -16,5 +17,6 @@ module.exports = function addProdMiddlewares(app, { publicPath = '/', outputPath
   app.use(compression());
   app.use(publicPath, express.static(outputPath));
 
+  // Host static
   app.get('*', (req, res) => res.sendFile(path.resolve(outputPath, 'index.html')));
 };

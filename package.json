@@ -1,5 +1,5 @@
 {
-  "name": "spa-static-server",
+  "name": "@transcend-io/spa-static-server",
   "version": "1.0.0",
   "description": "A docker image that will run a static build of a SPA, redirecting 404 to index.html",
   "license": "MIT",
@@ -10,33 +10,49 @@
   "bugs": {
     "url": "https://github.com/transcend-io/spa-static-server/issues"
   },
-  "main": ".",
+  "files": [
+    "server/**/*",
+    "package.json",
+    "package-lock.json"
+  ],
+  "main": "server/index.js",
   "engines": {},
   "author": "Transcend Inc.",
+  "bin": {
+    "tr-server": "./cli.js"
+  },
   "scripts": {
     "####### Build #######": "",
     "build": "docker build -f \"./Dockerfile\" .",
     "####### Linting #######": "",
-    "lint": "BUILD_ENV=development NODE_ENV=development eslint .",
+    "lint": "eslint .",
     "####### Server #######": "",
-    "start": "node server --color always",
+    "start": "BUILD_ENV_PATH=./examples/example.env node server --color always",
     "####### Dependencies #######": "",
     "check:deps:interactive": "npm-check -u",
     "####### Example #######": "",
-    "example:build": "docker-compose -p spa-static-example -f example.yml build",
-    "example:up": "docker-compose -p spa-static-example -f example.yml up",
-    "example:remote:build": "docker-compose -p spa-static-example-remote -f example-remote.yml build",
-    "example:remote:down": "docker-compose -p spa-static-example-remote -f example-remote.yml down",
-    "example:remote:up": "docker-compose -p spa-static-example-remote -f example-remote.yml up"
+    "example:build": "docker-compose -p spa-static-example -f examples/example.yml build",
+    "example:up": "docker-compose -p spa-static-example -f examples/example.yml up",
+    "example:down": "docker-compose -p spa-static-example -f examples/example.yml down",
+    "example:remote:build": "docker-compose -p spa-static-example-remote -f examples/example-remote.yml build",
+    "example:remote:down": "docker-compose -p spa-static-example-remote -f examples/example-remote.yml down",
+    "example:remote:up": "docker-compose -p spa-static-example-remote -f examples/example-remote.yml up"
   },
   "dependencies": {
     "chalk": "^2.4.2",
     "compression": "^1.7.4",
-    "express": "^4.16.4",
-    "http-proxy-middleware": "^0.19.1"
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^0.19.1",
+    "https": "^1.0.0",
+    "node-fetch": "^2.6.0",
+    "webpack": "^4.35.0",
+    "webpack-dev-middleware": "^3.7.0",
+    "webpack-hot-middleware": "^2.25.0"
   },
   "devDependencies": {
-    "eslint": "^5.16.0",
+    "eslint": "^6.0.1",
+    "eslint-plugin-import": "^2.18.0",
     "npm-check": "^5.9.0"
   }
 }

@@ -6,7 +6,7 @@ services:
     build:
       # Start this container from an image built using the following directory
       # and Dockerfile
-      context: ./
+      context: ../
       dockerfile: Dockerfile
     # Environment variables
     environment:
@@ -17,9 +17,8 @@ services:
       - "3012:3012"
     volumes:
       # Mount the server for dev only (not needed)
-      - "./server:/app/server"
+      - "../server:/app/server"
       # Mount the local build
       - "./example-build:/build"
       # Mount the certs
-      - "./ssl/certificate.pem:/ssl/certificate.pem"
-      - "./ssl/private.key:/ssl/private.key"
+      - "../server/ssl:/ssl"

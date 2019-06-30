@@ -6,7 +6,7 @@ services:
     build:
       # Start this container from an image built using the following directory
       # and Dockerfile
-      context: ./
+      context: ../
       dockerfile: Dockerfile
     # Pass in AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
     env_file:
@@ -21,7 +21,6 @@ services:
       - "3012:3012"
     volumes:
       # Mount the server for dev only (not needed)
-      - "./server:/app/server"
+      - "../server:/app/server"
       # Mount the certs
-      - "./ssl/certificate.pem:/ssl/certificate.pem"
-      - "./ssl/private.key:/ssl/private.key"
+      - "../server/ssl:/ssl"
