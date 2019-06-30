@@ -43,6 +43,8 @@ const {
   FRAGMENTS_ROUTE = '/graphql',
   // Environment
   NODE_ENV = 'production',
+  // Path to webpack config in NODE_ENV=development
+  WEBPACK_PATH,
 } = process.env;
 
 // Set NODE_ENV if not
@@ -71,6 +73,7 @@ module.exports = {
   AWS_ACCESS_KEY_ID,
   AWS_SECRET_ACCESS_KEY,
   WRITE_FRAGMENT_PATH,
+  WEBPACK_PATH,
   FRAGMENTS_ROUTE,
   NODE_ENV,
 };

@@ -57,6 +57,7 @@ BUILD_ENV_PATH=./env tr-server
 | FRONTEND_URL | The URL to host the frontend server on | *NA* | REQUIRED |
 | PROXY_ROUTE | Proxy all requests made by the frontend to the `BACKEND_URL` starting with this path | /backend | REQUIRED |
 | NODE_ENV | Node environment | production | OPTIONAL |
+| WEBPACK_PATH | Webpack configuration path | *NA* | REQUIRED if NODE_ENV!=production |
 | SSL_CERT | The location of the SSL certificate | /ssl/certificate.pem | OPTIONAL |
 | SSL_KEY | The location of the SSL key | /ssl/private.key | OPTIONAL |
 | BUILD_PATH | The location to keep the build | /build | OPTIONAL |
