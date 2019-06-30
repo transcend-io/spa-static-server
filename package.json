@@ -1,6 +1,6 @@
 {
   "name": "@transcend-io/spa-static-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A docker image that will run a static build of a SPA, redirecting 404 to index.html",
   "license": "MIT",
   "repository": {
@@ -12,6 +12,7 @@
   },
   "files": [
     "server/**/*",
+    "cli.js",
     "package.json",
     "package-lock.json"
   ],
