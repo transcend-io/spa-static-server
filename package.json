@@ -29,7 +29,7 @@
     "lint": "eslint .",
     "####### Server #######": "",
     "start": "BUILD_ENV_PATH=./examples/example.env node server",
-    "start:cli": "BUILD_ENV_PATH=./examples/example.env ./cli.js",
+    "start:cli": "FORCE_COLOR=1 BUILD_ENV_PATH=./examples/example.env ./cli.js",
     "####### Dependencies #######": "",
     "check:deps:interactive": "npm-check -u",
     "####### Example #######": "",
