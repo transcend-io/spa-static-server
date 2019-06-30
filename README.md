@@ -32,13 +32,22 @@ A simple javascript server to host a production SPA build, or an auto-reloading 
     npm i
     ```
 
-## Use
+## Usage as Docker Image
 
 An example of using this docker file can be found in `examples/example.yml`.
 
 1. Modify the file to point to files on your local machine
 2. Run `npm run build` to build the image
 3. Docker compose the example `examples/docker-compose -f example.yml up`
+
+## Usage as Cli
+
+The server can be installed with npm and used as at the command line.
+
+```sh
+npm i transcend-io/spa-static-server
+BUILD_ENV_PATH=./env tr-server
+```
 
 ## Environment Variables
 
