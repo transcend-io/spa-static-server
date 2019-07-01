@@ -45,7 +45,7 @@ async function main() {
   // Get and store the fragment types from the graphql api
   if (envs.WRITE_FRAGMENT_PATH) {
     await getFragmentTypes(
-      `${envs.BACKEND_URL}/${envs.FRAGMENTS_ROUTE}`,
+      `${envs.BACKEND_URL}/${envs.FRAGMENTS_ROUTE.startsWith('/') ? envs.FRAGMENTS_ROUTE.slice(1) : envs.FRAGMENTS_ROUTE}`,
       envs.WRITE_FRAGMENT_PATH,
     );
   }
