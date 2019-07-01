@@ -1,6 +1,7 @@
 /* eslint-disable global-require */
 // external modules
 const { existsSync } = require('fs');
+const { resolve } = require('path');
 
 // local
 const { NODE_ENV, WEBPACK_PATH } = require('../envs');
@@ -19,10 +20,11 @@ module.exports = (app, options) => {
     const addProdMiddlewares = require('./addProdMiddlewares');
     addProdMiddlewares(app, options);
   } else {
-    if (!existsSync(WEBPACK_PATH)) {
+    const FULL_PATH = resolve(WEBPACK_PATH);
+    if (!existsSync(FULL_PATH)) {
       throw new Error(`Invalid path to webpack config: "${WEBPACK_PATH}"`)
     }
-    const webpackConfig = require(WEBPACK_PATH); // eslint-disable-line import/no-dynamic-require
+    const webpackConfig = require(FULL_PATH); // eslint-disable-line import/no-dynamic-require
     const addDevMiddlewares = require('./addDevMiddlewares');
     addDevMiddlewares(app, webpackConfig);
   }
