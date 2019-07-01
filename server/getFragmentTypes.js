@@ -93,7 +93,6 @@ module.exports = async function getFragmentTypes(
           err.message.includes('ECONNREFUSED'))
       ) {
         logger.log('[SKIP] Skipping fragment types because backend is off');
-        process.exit(0);
       } else {
         throw err;
       }

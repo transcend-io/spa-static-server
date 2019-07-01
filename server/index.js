@@ -20,15 +20,6 @@ const logger = require('./logger');
 const setup = require('./middlewares');
 const getFragmentTypes = require('./getFragmentTypes');
 
-// Get and store the fragment types from the graphql api
-if (envs.WRITE_FRAGMENT_PATH) {
-  getFragmentTypes(
-    `${envs.BACKEND_URL}/${envs.FRAGMENTS_ROUTE}`,
-    envs.WRITE_FRAGMENT_PATH,
-  );
-}
-
-
 // Load in assets from s3
 if (envs.S3_BUCKET) {
   // Ensure access key and secret are set
@@ -41,49 +32,66 @@ if (envs.S3_BUCKET) {
   execSync(cmd);
 }
 
-// Log the config
-logger.config(envs);
-
-// Create an express server
-const app = express();
-
 // SSL options
 const ssl = {
   cert: readFileSync(envs.SSL_CERT),
   key: readFileSync(envs.SSL_KEY),
 };
 
-// If you need a backend, e.g. an API, add your custom backend-specific middleware here
-app.use(envs.PROXY_ROUTE, proxy(envs.PROXY_ROUTE, {
-  pathRewrite: { [`^${envs.PROXY_ROUTE}`]: '' },
-  target: envs.BACKEND_URL,
-  ssl,
-  secure: false,
-}));
+/**
+ * Start the server
+ */
+async function main() {
+  // Get and store the fragment types from the graphql api
+  if (envs.WRITE_FRAGMENT_PATH) {
+    await getFragmentTypes(
+      `${envs.BACKEND_URL}/${envs.FRAGMENTS_ROUTE}`,
+      envs.WRITE_FRAGMENT_PATH,
+    );
+  }
+
+  // Log the config
+  logger.config(envs);
+
+  // Create an express server
+  const app = express();
+
+  // If you need a backend, e.g. an API, add your custom backend-specific middleware here
+  app.use(envs.PROXY_ROUTE, proxy(envs.PROXY_ROUTE, {
+    pathRewrite: { [`^${envs.PROXY_ROUTE}`]: '' },
+    target: envs.BACKEND_URL,
+    ssl,
+    secure: false,
+  }));
 
 
-// Direct to s3 upload
-// app.use('/s3', require('react-dropzone-s3-uploader/s3router')({
-//   ACL: 'public-read', // this is the default - set to `public-read` to let anyone view uploads
-//   bucket: 'development-photo-upload', // required
-//   headers: { 'Access-Control-Allow-Origin': '*' }, // optional
-//   region: 'us-east-1', // optional
-// }));
+  // Direct to s3 upload
+  // app.use('/s3', require('react-dropzone-s3-uploader/s3router')({
+  //   ACL: 'public-read', // this is the default - set to `public-read` to let anyone view uploads
+  //   bucket: 'development-photo-upload', // required
+  //   headers: { 'Access-Control-Allow-Origin': '*' }, // optional
+  //   region: 'us-east-1', // optional
+  // }));
 
 
-// In production we need to pass these values in instead of relying on webpack
-setup(app, {
-  outputPath: envs.BUILD_PATH,
-  publicPath: '/',
-});
+  // In production we need to pass these values in instead of relying on webpack
+  setup(app, {
+    outputPath: envs.BUILD_PATH,
+    publicPath: '/',
+  });
 
-// Determine the host
-const splitFull = envs.FRONTEND_URL.split(':');
-const port = Number(splitFull.pop());
-const prettyHost = splitFull.join(':');
+  // Determine the host
+  const splitFull = envs.FRONTEND_URL.split(':');
+  const port = Number(splitFull.pop());
+  const prettyHost = splitFull.join(':');
 
-// Start the server
-https.createServer(ssl, app).listen(port, (err) => {
-  if (err) return logger.error(err.message);
-  return logger.appStarted(port, prettyHost);
-});
+  // Start the server
+  https.createServer(ssl, app).listen(port, (err) => {
+    if (err) return logger.error(err.message);
+    return logger.appStarted(port, prettyHost);
+  });
+}
+
+// Run the server
+main();
+
