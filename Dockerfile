@@ -1,5 +1,5 @@
 # Docker image for the node app
-ARG NODE_IMAGE=10.15.0-alpine
+ARG NODE_IMAGE=12.10.0-alpine
 FROM node:$NODE_IMAGE
 
 # In order to read from s3 buckets, we need aws cli
