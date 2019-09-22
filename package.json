@@ -1,6 +1,6 @@
 {
   "name": "@transcend-io/spa-static-server",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A docker image that will run a static build of a SPA, redirecting 404 to index.html",
   "license": "MIT",
   "repository": {
