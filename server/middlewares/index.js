@@ -22,7 +22,7 @@ module.exports = (app, options) => {
   } else {
     const FULL_PATH = resolve(WEBPACK_PATH);
     if (!existsSync(FULL_PATH)) {
-      throw new Error(`Invalid path to webpack config: "${WEBPACK_PATH}"`)
+      throw new Error(`Invalid path to webpack config: "${WEBPACK_PATH}"`);
     }
     const webpackConfig = require(FULL_PATH); // eslint-disable-line import/no-dynamic-require
     const addDevMiddlewares = require('./addDevMiddlewares');
