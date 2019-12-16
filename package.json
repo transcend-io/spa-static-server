@@ -23,9 +23,9 @@
     "tr-server": "./cli.js"
   },
   "scripts": {
-    "####### Build #######": "",
-    "build": "docker build -f \"./Dockerfile\" .",
-    "pub": "yarn build && docker --config ~/.docker-docker push transcendio/spa-static-server:latest",
+    "####### Build #######": "TODO setup to deploy both latest and image tag on ci",
+    "build": "docker --config ~/.docker-docker build -f \"./Dockerfile\" . --tag transcendio/spa-static-server:latest --tag transcendio/spa-static-server:$(git rev-parse --short=7 HEAD)",
+    "pub": "yarn build && docker --config ~/.docker-docker push transcendio/spa-static-server:latest && docker --config ~/.docker-docker push transcendio/spa-static-server:$(git rev-parse --short=7 HEAD)",
     "####### Linting #######": "",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

@@ -16,21 +16,21 @@ A simple javascript server to host a production SPA build, or an auto-reloading 
 
 1. Clone:
 
-    ```sh
-    git clone https://github.com/transcend-io/spa-static-server.git
-    ```
+   ```sh
+   git clone https://github.com/transcend-io/spa-static-server.git
+   ```
 
 2. Build the docker image
 
-    ```sh
-    npm run build
-    ```
+   ```sh
+   npm run build
+   ```
 
 3. Install locally
 
-    ```sh
-    npm i
-    ```
+   ```sh
+   npm i
+   ```
 
 ## Usage as Docker Image
 
@@ -51,19 +51,21 @@ BUILD_ENV_PATH=./env tr-server
 
 ## Environment Variables
 
-| Name | Comment | Default | Required |
-| --- | ----------- | ----------- |-----------|
-| BACKEND_URL | The URL of the backend server | *NA* | REQUIRED |
-| FRONTEND_URL | The URL to host the frontend server on | *NA* | REQUIRED |
-| PROXY_ROUTE | Proxy all requests made by the frontend to the `BACKEND_URL` starting with this path | /backend | REQUIRED |
-| NODE_ENV | Node environment | production | OPTIONAL |
-| WEBPACK_PATH | Webpack configuration path | *NA* | REQUIRED if NODE_ENV!=production |
-| SSL_CERT | The location of the SSL certificate | /ssl/certificate.pem | OPTIONAL |
-| SSL_KEY | The location of the SSL key | /ssl/private.key | OPTIONAL |
-| BUILD_PATH | The location to keep the build | /build | OPTIONAL |
-| S3_BUCKET | The location of the S3 bucket holding the build | *NA* | OPTIONAL |
-| AWS_ACCESS_KEY_ID | The AWS access key needed to download from the bucket | *NA* | REQUIRED if S3_BUCKET provided |
-| AWS_SECRET_ACCESS_KEY | The AWS secret key needed to download from the bucket | *NA* | REQUIRED if S3_BUCKET provided |
-| WRITE_FRAGMENT_PATH | Provide the path to where GraphQL fragments be written | *NA* | OPTIONAL |
-| FRAGMENTS_ROUTE | The GraphQL route to get fragments from on BACKEND_URL | /graphql | OPTIONAL |
-| BUILD_ENV_PATH | A .env file to read environment variables from | *NA* | OPTIONAL |
+| Name                  | Comment                                                                              | Default              | Required                         |
+| --------------------- | ------------------------------------------------------------------------------------ | -------------------- | -------------------------------- |
+| BACKEND_URL           | The URL of the backend server                                                        | _NA_                 | REQUIRED                         |
+| FRONTEND_URL          | The URL to host the frontend server on                                               | _NA_                 | REQUIRED                         |
+| PROXY_ROUTE           | Proxy all requests made by the frontend to the `BACKEND_URL` starting with this path | /backend             | REQUIRED                         |
+| NODE_ENV              | Node environment                                                                     | production           | OPTIONAL                         |
+| WEBPACK_PATH          | Webpack configuration path                                                           | _NA_                 | REQUIRED if NODE_ENV!=production |
+| SSL_CERT              | The location of the SSL certificate                                                  | /ssl/certificate.pem | OPTIONAL                         |
+| SSL_KEY               | The location of the SSL key                                                          | /ssl/private.key     | OPTIONAL                         |
+| BUILD_PATH            | The location to keep the build                                                       | /build               | OPTIONAL                         |
+| S3_BUCKET             | The location of the S3 bucket holding the build                                      | _NA_                 | OPTIONAL                         |
+| AWS_ACCESS_KEY_ID     | The AWS access key needed to download from the bucket                                | _NA_                 | REQUIRED if S3_BUCKET provided   |
+| AWS_SECRET_ACCESS_KEY | The AWS secret key needed to download from the bucket                                | _NA_                 | REQUIRED if S3_BUCKET provided   |
+| WRITE_FRAGMENT_PATH   | Provide the path to where GraphQL fragments be written                               | _NA_                 | OPTIONAL                         |
+| FRAGMENTS_ROUTE       | The GraphQL route to get fragments from on BACKEND_URL                               | /graphql             | OPTIONAL                         |
+| BUILD_ENV_PATH        | A .env file to read environment variables from                                       | _NA_                 | OPTIONAL                         |
+
+- TODO image could be considerable smaller
