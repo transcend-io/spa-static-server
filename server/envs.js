@@ -51,13 +51,23 @@ const {
 process.env.NODE_ENV = NODE_ENV;
 
 // Ensure paths exist
-if (!existsSync(SSL_CERT)) throw new Error(`File does not exist: "${SSL_CERT}"`);
-if (!existsSync(SSL_KEY)) throw new Error(`File does not exist: "${SSL_KEY}"`);
-if (!existsSync(BUILD_PATH)) throw new Error(`Folder does not exist: "${BUILD_PATH}"`);
+if (!existsSync(SSL_CERT)) {
+  throw new Error(`File does not exist: "${SSL_CERT}"`);
+}
+if (!existsSync(SSL_KEY)) {
+  throw new Error(`File does not exist: "${SSL_KEY}"`);
+}
+if (!existsSync(BUILD_PATH)) {
+  throw new Error(`Folder does not exist: "${BUILD_PATH}"`);
+}
 
 // Ensure URLS are provided
-if (!BACKEND_URL) throw new Error('Missing env: "BACKEND_URL"');
-if (!FRONTEND_URL) throw new Error('Missing env: "FRONTEND_URL"');
+if (!BACKEND_URL) {
+  throw new Error('Missing env: "BACKEND_URL"');
+}
+if (!FRONTEND_URL) {
+  throw new Error('Missing env: "FRONTEND_URL"');
+}
 
 /**
  * The url of the backend server

@@ -10,7 +10,10 @@ const compression = require('compression');
  * @param {*} options  the options to pass to the middlewares
  * @returns {void}
  */
-module.exports = function addProdMiddlewares(app, { publicPath = '/', outputPath }) {
+module.exports = function addProdMiddlewares(
+  app,
+  { publicPath = '/', outputPath },
+) {
   // compression middleware compresses your server responses which makes them
   // smaller (applies also to assets). You can read more about that technique
   // and other good practices on official Express.js docs http://mxs.is/googmy
@@ -18,5 +21,7 @@ module.exports = function addProdMiddlewares(app, { publicPath = '/', outputPath
   app.use(publicPath, express.static(outputPath));
 
   // Host static
-  app.get('*', (req, res) => res.sendFile(path.resolve(outputPath, 'index.html')));
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(outputPath, 'index.html')),
+  );
 };

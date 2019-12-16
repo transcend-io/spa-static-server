@@ -22,6 +22,8 @@ ENV NODE_ENV ${NODE_ENV}
 RUN mkdir /ssl
 RUN mkdir /build
 RUN mkdir /app
+
+# Build in app
 WORKDIR /app
 
 # Copy package.json and install
@@ -36,5 +38,8 @@ RUN yarn
 # Copy over the server code
 COPY server/ /app/server/
 
+# Run from root
+WORKDIR /
+
 # Test runner
-CMD ["node", "server"]
+CMD ["node", "./app/server"]

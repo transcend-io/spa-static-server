@@ -24,10 +24,12 @@ const getFragmentTypes = require('./getFragmentTypes');
 if (envs.S3_BUCKET) {
   // Ensure access key and secret are set
   if (!envs.AWS_ACCESS_KEY_ID || !envs.AWS_SECRET_ACCESS_KEY) {
-    throw new Error('AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY must be provided with S3_BUCKET')
+    throw new Error(
+      'AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY must be provided with S3_BUCKET',
+    );
   }
 
-  logger.info(`Cloning in the contents form the s3 bucket: ${envs.S3_BUCKET}"`)
+  logger.info(`Cloning in the contents form the s3 bucket: ${envs.S3_BUCKET}"`);
   const cmd = `AWS_ACCESS_KEY_ID=${envs.AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${envs.AWS_SECRET_ACCESS_KEY} aws s3 cp s3://${envs.S3_BUCKET}/ "${envs.BUILD_PATH}" --recursive`;
   execSync(cmd);
 }
@@ -45,7 +47,11 @@ async function main() {
   // Get and store the fragment types from the graphql api
   if (envs.WRITE_FRAGMENT_PATH) {
     await getFragmentTypes(
-      `${envs.BACKEND_URL}/${envs.FRAGMENTS_ROUTE.startsWith('/') ? envs.FRAGMENTS_ROUTE.slice(1) : envs.FRAGMENTS_ROUTE}`,
+      `${envs.BACKEND_URL}/${
+        envs.FRAGMENTS_ROUTE.startsWith('/')
+          ? envs.FRAGMENTS_ROUTE.slice(1)
+          : envs.FRAGMENTS_ROUTE
+      }`,
       envs.WRITE_FRAGMENT_PATH,
     );
   }
@@ -57,22 +63,15 @@ async function main() {
   const app = express();
 
   // If you need a backend, e.g. an API, add your custom backend-specific middleware here
-  app.use(envs.PROXY_ROUTE, proxy(envs.PROXY_ROUTE, {
-    pathRewrite: { [`^${envs.PROXY_ROUTE}`]: '' },
-    target: envs.BACKEND_URL,
-    ssl,
-    secure: false,
-  }));
-
-
-  // Direct to s3 upload
-  // app.use('/s3', require('react-dropzone-s3-uploader/s3router')({
-  //   ACL: 'public-read', // this is the default - set to `public-read` to let anyone view uploads
-  //   bucket: 'development-photo-upload', // required
-  //   headers: { 'Access-Control-Allow-Origin': '*' }, // optional
-  //   region: 'us-east-1', // optional
-  // }));
-
+  app.use(
+    envs.PROXY_ROUTE,
+    proxy(envs.PROXY_ROUTE, {
+      pathRewrite: { [`^${envs.PROXY_ROUTE}`]: '' },
+      target: envs.BACKEND_URL,
+      ssl,
+      secure: false,
+    }),
+  );
 
   // In production we need to pass these values in instead of relying on webpack
   setup(app, {
@@ -86,7 +85,7 @@ async function main() {
   const prettyHost = splitFull.join(':');
 
   // Start the server
-  https.createServer(ssl, app).listen(port, (err) => {
+  https.createServer(ssl, app).listen(port, err => {
     if (err) return logger.error(err.message);
     return logger.appStarted(port, prettyHost);
   });
@@ -94,4 +93,3 @@ async function main() {
 
 // Run the server
 main();
-

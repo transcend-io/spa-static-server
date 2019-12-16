@@ -36,11 +36,11 @@ ${chalk.blue(`Press ${chalk.italic('CTRL-C')} to stop`)}
   /** Log the configuration */
   config: (vars) => {
     console.log(chalk.bold('ENVS:'));
-    console.log(divider)
+    console.log(divider);
     Object.entries(vars)
       .filter(([k, v]) => !k.includes('AWS_') && v !== undefined)
-      .forEach(([key, val]) => console.log(`  ${key}: ${val}`))
-    console.log(divider)
+      .forEach(([key, val]) => console.log(`  ${key}: ${val}`));
+    console.log(divider);
   },
 
   /** Called whenever there's an error on the server we want to print */
