@@ -62,10 +62,8 @@ BUILD_ENV_PATH=./env tr-server
 | SSL_KEY               | The location of the SSL key                                                          | /ssl/private.key     | OPTIONAL                         |
 | BUILD_PATH            | The location to keep the build                                                       | /build               | OPTIONAL                         |
 | S3_BUCKET             | The location of the S3 bucket holding the build                                      | _NA_                 | OPTIONAL                         |
-| AWS_ACCESS_KEY_ID     | The AWS access key needed to download from the bucket                                | _NA_                 | REQUIRED if S3_BUCKET provided   |
-| AWS_SECRET_ACCESS_KEY | The AWS secret key needed to download from the bucket                                | _NA_                 | REQUIRED if S3_BUCKET provided   |
 | WRITE_FRAGMENT_PATH   | Provide the path to where GraphQL fragments be written                               | _NA_                 | OPTIONAL                         |
 | FRAGMENTS_ROUTE       | The GraphQL route to get fragments from on BACKEND_URL                               | /graphql             | OPTIONAL                         |
 | BUILD_ENV_PATH        | A .env file to read environment variables from                                       | _NA_                 | OPTIONAL                         |
 
-- TODO image could be considerable smaller
+- TODO image could be considerably smaller

@@ -20,17 +20,10 @@ const logger = require('./logger');
 const setup = require('./middlewares');
 const getFragmentTypes = require('./getFragmentTypes');
 
-// Load in assets from s3
+// Load in assets from s3. AWS credentials are borrowed from the local ~/.aws folder
 if (envs.S3_BUCKET) {
-  // Ensure access key and secret are set
-  if (!envs.AWS_ACCESS_KEY_ID || !envs.AWS_SECRET_ACCESS_KEY) {
-    throw new Error(
-      'AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY must be provided with S3_BUCKET',
-    );
-  }
-
-  logger.info(`Cloning in the contents form the s3 bucket: ${envs.S3_BUCKET}"`);
-  const cmd = `AWS_ACCESS_KEY_ID=${envs.AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${envs.AWS_SECRET_ACCESS_KEY} aws s3 cp s3://${envs.S3_BUCKET}/ "${envs.BUILD_PATH}" --recursive`;
+  logger.info(`Cloning in the contents from the s3 bucket: ${envs.S3_BUCKET}"`);
+  const cmd = `aws s3 cp s3://${envs.S3_BUCKET}/ "${envs.BUILD_PATH}" --recursive`;
   execSync(cmd);
 }
 
