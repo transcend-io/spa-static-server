@@ -1,9 +1,16 @@
 {
     "cSpell.words": [
+        "antonbabenko",
+        "autofix",
+        "hadolint",
+        "koalaman",
+        "markdownlint",
         "middlewares",
         "server",
+        "shellcheck",
         "spa",
         "static",
+        "symlinks",
         "transcendio"
     ]
 }

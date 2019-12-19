@@ -1,0 +1,13 @@
+{
+  "MD004": {
+    "style": "dash"
+  },
+  "MD013": {
+    "line_length": 1000000
+  },
+  "MD029": {
+    "style": "ordered"
+  },
+  "MD033": false,
+  "default": true
+}

@@ -51,19 +51,19 @@ BUILD_ENV_PATH=./env tr-server
 
 ## Environment Variables
 
-| Name                  | Comment                                                                              | Default              | Required                         |
-| --------------------- | ------------------------------------------------------------------------------------ | -------------------- | -------------------------------- |
-| BACKEND_URL           | The URL of the backend server                                                        | _NA_                 | REQUIRED                         |
-| FRONTEND_URL          | The URL to host the frontend server on                                               | _NA_                 | REQUIRED                         |
-| PROXY_ROUTE           | Proxy all requests made by the frontend to the `BACKEND_URL` starting with this path | /backend             | REQUIRED                         |
-| NODE_ENV              | Node environment                                                                     | production           | OPTIONAL                         |
-| WEBPACK_PATH          | Webpack configuration path                                                           | _NA_                 | REQUIRED if NODE_ENV!=production |
-| SSL_CERT              | The location of the SSL certificate                                                  | /ssl/certificate.pem | OPTIONAL                         |
-| SSL_KEY               | The location of the SSL key                                                          | /ssl/private.key     | OPTIONAL                         |
-| BUILD_PATH            | The location to keep the build                                                       | /build               | OPTIONAL                         |
-| S3_BUCKET             | The location of the S3 bucket holding the build                                      | _NA_                 | OPTIONAL                         |
-| WRITE_FRAGMENT_PATH   | Provide the path to where GraphQL fragments be written                               | _NA_                 | OPTIONAL                         |
-| FRAGMENTS_ROUTE       | The GraphQL route to get fragments from on BACKEND_URL                               | /graphql             | OPTIONAL                         |
-| BUILD_ENV_PATH        | A .env file to read environment variables from                                       | _NA_                 | OPTIONAL                         |
+| Name                | Comment                                                                              | Default              | Required                         |
+|---------------------|--------------------------------------------------------------------------------------|----------------------|----------------------------------|
+| BACKEND_URL         | The URL of the backend server                                                        | _NA_                 | REQUIRED                         |
+| FRONTEND_URL        | The URL to host the frontend server on                                               | _NA_                 | REQUIRED                         |
+| PROXY_ROUTE         | Proxy all requests made by the frontend to the `BACKEND_URL` starting with this path | /backend             | REQUIRED                         |
+| NODE_ENV            | Node environment                                                                     | production           | OPTIONAL                         |
+| WEBPACK_PATH        | Webpack configuration path                                                           | _NA_                 | REQUIRED if NODE_ENV!=production |
+| SSL_CERT            | The location of the SSL certificate                                                  | /ssl/certificate.pem | OPTIONAL                         |
+| SSL_KEY             | The location of the SSL key                                                          | /ssl/private.key     | OPTIONAL                         |
+| BUILD_PATH          | The location to keep the build                                                       | /build               | OPTIONAL                         |
+| S3_BUCKET           | The location of the S3 bucket holding the build                                      | _NA_                 | OPTIONAL                         |
+| WRITE_FRAGMENT_PATH | Provide the path to where GraphQL fragments be written                               | _NA_                 | OPTIONAL                         |
+| FRAGMENTS_ROUTE     | The GraphQL route to get fragments from on BACKEND_URL                               | /graphql             | OPTIONAL                         |
+| BUILD_ENV_PATH      | A .env file to read environment variables from                                       | _NA_                 | OPTIONAL                         |
 
 - TODO image could be considerably smaller

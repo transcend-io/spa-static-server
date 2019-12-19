@@ -1,0 +1,68 @@
+# See http://pre-commit.com for more information
+# See http://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v1.3.0
+    hooks:
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-added-large-files
+      - id: check-json
+        exclude: (.vscode/|tsconfig.json|tsconfig.webpack.json)
+      - id: pretty-format-json
+        args: [--autofix, --no-sort-keys]
+        exclude: (.vscode/|tsconfig.json|tsconfig.webpack.json|fragmentTypes.json)
+      - id: detect-private-key
+        exclude: (server/ssl/)
+      - id: detect-aws-credentials
+        args: [--allow-missing-credentials]
+      - id: check-yaml
+        files: (yaml$|yml$)
+  - repo: local
+    hooks:
+      - id: dockerfile-lint
+        name: Dockerfile Lint
+        language: docker_image
+        # https://github.com/hadolint/hadolint
+        entry: hadolint/hadolint:v1.17.1 hadolint
+        files: ^.*Dockerfile.*$
+        # Ignore pinning of versions
+        args: [
+            --ignore,
+            DL3006,
+            --ignore,
+            DL3008,
+            --ignore,
+            DL3013,
+            --ignore,
+            DL3018,
+            # TODO
+            --ignore,
+            SC2039,
+          ]
+      - id: shellcheck-lint
+        name: Shellcheck
+        language: docker_image
+        # https://github.com/koalaman/shellcheck
+        entry: koalaman/shellcheck:v0.7.0
+        types: [shell]
+      - id: markdown-lint
+        name: Markdown Lint
+        language: node
+        # https://github.com/igorshubovych/markdownlint-cli
+        additional_dependencies: [markdownlint-cli]
+        entry: markdownlint
+        types: [markdown]
+      - id: eslint-packages
+        name: ESLint Packages
+        language: system
+        entry: ./node_modules/.bin/eslint
+        args: [--fix]
+        types: [file]
+        files: src/.*\.(js|jsx|ts|tsx)$
+  - repo: git://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.18.0
+    hooks:
+      - id: terraform_fmt
